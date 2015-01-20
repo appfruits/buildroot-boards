@@ -73,6 +73,8 @@ You can customize the configuration with:
 If you want to customize the linux kernel configuration:
 > make linux-menuconfig
 
+## Build
+
 To build everything just run:
 > make
 
