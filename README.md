@@ -89,7 +89,7 @@ Prepare a SD-card as described by Acmesystems.it (http://www.acmesystems.it/micr
 Copy at91bootstrap.bin as boot.bin (important, as ROMBoot searches for a file named boot.bin), zImage and acme-acqua_lcd_70.dtb to the first partition named KERNEL (you should be in the ~/Buildroot/buildroot-at91 folder now)
 > sudo cp output/images/at91bootstrap.bin /[some folders in between perhaps]/KERNEL/boot.bin
 > sudo cp output/images/zImage /[some folders in between perhaps]/KERNEL/zImage
-> sudo cp output/images/acme-acqua_lcd_70.dtb /[some folders in between perhaps]/KERNEL/acme-acqua_lcd_70.dtb
+> sudo cp output/images/acme-acqua_lcd_70.dtb /[some folders in between perhaps]/KERNEL/at91-sama5d3_acqua.dtb
 
 Now extract the rootfs to the second partition:
 > sudo tar xvf output/images/rootfs.tar -C /[some folders in between perhaps]/rootfs
