@@ -1,5 +1,5 @@
 config BR2_PACKAGE_AT91BOOT
-	bool "at91boot"
+	bool "AT91 Bootloader"
 	help
 	  AT91BOOT, Atmel secondlevel bootloader
 
