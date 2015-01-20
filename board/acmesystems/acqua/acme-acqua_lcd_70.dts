@@ -1,0 +1,352 @@
+/*
+ * acme-acqua_lcd_70.dts 
+ * Device Tree for Acqua A5 SoM with 7.0 inch lcd
+ * with resistive touch
+ *
+ *  Copyright (C) 2014 Acme Systems,
+ *		  2014 Sergio Tanzilli <tanzilli@atmel.com>
+ *
+ * Licensed under GPLv2 or later.
+ */
+/dts-v1/;
+#include "sama5d3.dtsi"
+
+/ {
+	model = "Acqua A5 SoM";
+	compatible = "acme,acqua", "pda,tm70xx", "atmel,sama5d3", "atmel,sama5";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	memory {
+		reg = <0x20000000 0x10000000>;
+	};
+
+	clocks {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		main_clock: clock@0 {
+			compatible = "atmel,osc", "fixed-clock";
+			clock-frequency = <12000000>;
+		};
+	};
+
+	ahb {
+		apb {
+				lcd_bus@f0030000 {
+					status = "okay";
+
+					lcd@f0030000 {
+						status = "okay";
+					};
+
+					lcdovl1@f0030140 {
+						status = "okay";
+					};
+
+					lcdovl2@f0030240 {
+						status = "okay";
+					};
+
+					lcdheo1@f0030340 {
+						status = "okay";
+					};
+				};
+
+			mmc0: mmc@f0000000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_mmc0_clk_cmd_dat0 &pinctrl_mmc0_dat1_3 &pinctrl_mmc0_dat4_7 &pinctrl_mmc0_cd>;
+				status = "okay";
+				slot@0 {
+					reg = <0>;
+					bus-width = <4>;
+				};
+			};
+			
+			mmc1: mmc@f8000000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_mmc1_clk_cmd_dat0 &pinctrl_mmc1_dat1_3 &pinctrl_mmc1_cd>;
+				status = "disabled";
+				slot@0 {
+					reg = <0>;
+					bus-width = <4>;
+				};
+			};
+			
+			mmc2: mmc@f8004000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_mmc2_clk_cmd_dat0 &pinctrl_mmc2_dat1_3>;
+				status = "disabled";
+				slot@0 {
+					reg = <0>;
+					bus-width = <4>;
+				};
+			};
+			
+
+			spi0: spi@f0004000 {
+				cs-gpios = <&pioD 13 0>, <&pioD 14 0>, <0>, <0>;
+				status = "okay";
+				
+				device@0 {
+					compatible = "spidev";
+					spi-max-frequency = <50000000>;	    // 50 MHz
+					reg = <0>;
+				};
+
+				device@1 {
+					compatible = "spidev";
+					spi-max-frequency = <50000000>;	    // 50 MHz
+					reg = <1>;
+				};
+			};
+
+			spi1: spi@f8008000 {
+				cs-gpios = <&pioC 25 0>, <0>, <0>, <&pioD 16 0>;
+				status = "disabled";
+
+				device@0 {
+					compatible = "spidev";
+					spi-max-frequency = <50000000>;	    // 50 MHz
+					reg = <0>;
+				};
+			};
+
+			spi1: spi@f8008000 {
+				cs-gpios = <&pioC 25 0>, <0>, <0>, <&pioD 16 0>;
+				status = "disabled";
+			};
+
+			i2c0: i2c@f0014000 {
+				status = "okay";
+			};
+
+			i2c1: i2c@f0018000 {
+				status = "disabled";
+			};
+
+			i2c2: i2c@f801c000 {
+				dmas = <0>, <0>;	/* Do not use DMA for i2c2 */
+				status = "disabled";
+			};
+
+			/* Bit banging I2C wired on the Atmel MAC chip */
+			i2c3@ {
+				compatible = "i2c-gpio";
+				gpios = <&pioE 1 0 /* SDA */
+						 &pioE 2 0 /* SCK */
+						>;
+
+				/*i2c-gpio,sda-open-drain;*/
+				/*i2c-gpio,scl-open-drain;*/
+				i2c-gpio,delay-us = <4>;	/* ~178 kHz */
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				/*rv3029c2@56 {
+					compatible = "rv3029c2";
+					reg = <0x56>;
+				};*/
+			};
+
+
+			/* Giga Ethernet */
+			macb0: ethernet@f0028000 {
+				phy-mode = "rgmii";
+				status = "disabled";
+			};
+
+			/* 10/100 Ethernet */
+			macb1: ethernet@f802c000 {
+				phy-mode = "rmii";
+				status = "okay";
+			};
+
+			pwm0: pwm@f002c000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_pwm0_pwml0>;
+				status = "disabled";
+			};
+
+			usart0: serial@f001c000 {
+				status = "okay";
+			};
+
+			usart1: serial@f0020000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart1 &pinctrl_usart1_rts_cts>;
+				status = "disabled";
+			};
+
+			uart0: serial@f0024000 {
+				status = "okay";
+			};
+			
+			can0: can@f000c000 {
+				status = "disabled";
+			};
+			
+			can1: can@f8010000 {
+				status = "disabled";
+			};
+			
+			adc0: adc@f8018000 {
+				atmel,adc-clock-rate = <1000000>;
+				atmel,adc-ts-wires = <4>;
+				atmel,adc-ts-pressure-threshold = <10000>;
+				status = "okay";
+			};
+
+
+			/*adc0: adc@f8018000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <
+					&pinctrl_adc0_adtrg
+					&pinctrl_adc0_ad0
+					&pinctrl_adc0_ad1
+					&pinctrl_adc0_ad2
+					&pinctrl_adc0_ad3
+					&pinctrl_adc0_ad4
+					&pinctrl_adc0_ad5
+					&pinctrl_adc0_ad6
+					&pinctrl_adc0_ad7
+					&pinctrl_adc0_ad8
+					&pinctrl_adc0_ad9
+					>;
+				status = "okay";
+			};*/
+
+
+			pinctrl@fffff200 {
+				board {
+					pinctrl_mmc0_cd: mmc0_cd {
+						atmel,pins =
+							<AT91_PIOE 0 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+					};
+
+					pinctrl_mmc1_cd: mmc1_cd {
+						atmel,pins =
+							<AT91_PIOE 1 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
+					};
+
+					pinctrl_pwm0_pwml0: pwm0_pwml0 {
+						atmel,pins =
+							<AT91_PIOA 21 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+					};
+
+					pinctrl_usba_vbus: usba_vbus {
+						atmel,pins =
+							<AT91_PIOE 9 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;	/* PE9, conflicts with A9 */
+					};
+				};
+			};
+
+			dbgu: serial@ffffee00 {
+				status = "okay";
+			};
+		};
+
+		nand0: nand@60000000 {
+			nand-bus-width = <8>;
+			nand-ecc-mode = "hw";
+			atmel,has-pmecc;
+			atmel,pmecc-cap = <4>;
+			atmel,pmecc-sector-size = <512>;
+			nand-on-flash-bbt;
+			status = "okay";
+
+			at91bootstrap@0 {
+				label = "at91bootstrap";
+				reg = <0x0 0x40000>;
+			};
+
+			bootloader@40000 {
+				label = "bootloader";
+				reg = <0x40000 0x80000>;
+			};
+
+			bootloaderenv@c0000 {
+				label = "bootloader env";
+				reg = <0xc0000 0xc0000>;
+			};
+
+			dtb@180000 {
+				label = "device tree";
+				reg = <0x180000 0x80000>;
+			};
+
+			kernel@200000 {
+				label = "kernel";
+				reg = <0x200000 0x600000>;
+			};
+
+			rootfs@800000 {
+				label = "rootfs";
+				reg = <0x800000 0x0f800000>;
+			};
+		};
+
+		usb0: gadget@00500000 {
+			atmel,vbus-gpio = <&pioE 9 GPIO_ACTIVE_HIGH>;	/* PE9, conflicts with A9 */
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_usba_vbus>;
+			status = "disabled";
+		}; 
+
+		usb1: ohci@00600000 {
+			num-ports = <3>;
+			status = "okay";
+		};
+
+		usb2: ehci@00700000 {
+			status = "okay";
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+
+		/* bp3 {
+			label = "PB_USER";
+			gpios = <&pioE 29 GPIO_ACTIVE_LOW>;
+			linux,code = <0x104>;
+			gpio-key,wakeup;
+		}; */
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led-blue {
+			label = "led-blue";
+			gpios = <&pioE 3 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+		};
+
+		led-green {
+			label = "led-green";
+			gpios = <&pioE 4 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+
+		led-white {
+			label = "led-white";
+			gpios = <&pioE 5 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+		};
+
+		led-red {
+			label = "led-red";
+			gpios = <&pioE 6 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+
+	};
+
+	sound {
+		status = "disabled";
+	};
+};

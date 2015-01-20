@@ -1,0 +1,19 @@
+AT91BOOT_VERSION = acme
+AT91BOOT_SITE = $(call github,tanzilli,at91bootstrap,$(AT91BOOT_VERSION))
+
+AT91BOOT_BINARY = $(AT91BOOT_MAKE_SUBDIR)/binaries/at91bootstrap.bin
+
+AT91BOOT_INSTALL_STAGING = YES
+AT91BOOT_INSTALL_TARGET = NO
+AT91BOOT_INSTALL_IMAGES = YES
+
+define AT91BOOT_BUILD_CMDS
+  $(MAKE1) CC="$(TARGET_CC)" LD="$(TARGET_LD)" -C $(@D) acqua-256m_defconfig
+  $(MAKE1) CROSS_COMPILE=$(TARGET_CROSS) -C $(@D)
+endef
+
+define AT91BOOT_INSTALL_IMAGES_CMDS
+        cp $(@D)/$(AT91BOOT_BINARY) $(BINARIES_DIR)
+endef
+
+$(eval $(generic-package))

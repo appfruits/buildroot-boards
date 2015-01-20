@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL/packages/at91boot/Config.in"
