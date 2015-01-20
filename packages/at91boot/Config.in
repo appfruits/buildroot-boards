@@ -1,5 +1,8 @@
 config BR2_PACKAGE_AT91BOOT
 	bool "AT91 Bootloader"
+	default y
 	help
-	  AT91BOOT, Atmel secondlevel bootloader
+	  Build and install AT91BOOT target image, Atmel secondlevel bootloader. The image is named
+	  at91bootstrap.bin in output/images. You will need to copy this file on the first partition
+	  of the sd card and name it boot.bin!
 
