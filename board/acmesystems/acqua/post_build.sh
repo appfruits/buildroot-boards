@@ -19,8 +19,8 @@ echo iface eth0 inet dhcp >> $filename
 echo hwaddress ether 00:04:25:12:34:56 >> $filename
 
 #Set the the debug port
-filename=$TARGET_ROOTFS_DIR/etc/inittab
-echo T0:2345:respawn:/sbin/getty -L ttyS0 115200 vt100 >> $filename
+#filename=$TARGET_ROOTFS_DIR/etc/inittab
+#echo T0:2345:respawn:/sbin/getty -L ttyS0 115200 vt100 >> $filename
 
 #Set rules to change wlan dongles
 filename=$TARGET_ROOTFS_DIR/etc/udev/rules.d/70-persistent-net.rules
@@ -30,8 +30,12 @@ echo SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="*", ATTR{de
 filename=$TARGET_ROOTFS_DIR/etc/fstab
 echo /dev/mmcblk0p1 /boot vfat noatime 0 1 > $filename
 echo /dev/mmcblk0p2 / ext4 noatime 0 1 >> $filename
-echo /dev/mmcblk0p3 /media/data ext4 noatime 0 1 >> $filename
+#echo /dev/mmcblk0p3 /media/data ext4 noatime 0 1 >> $filename
 echo proc /proc proc defaults 0 0 >> $filename
+echo none /sys sysfs defaults 0 0 >> $filename
+echo none /proc/bus/usb usbfs defaults 0 0 >> $filename
+echo devtps /dev/pts devpts defaults 0 0 >> $filename
+echo tmpfs /dev/shm tmpfs defaults 0 0 >> $filename
 
 #Add the standard Debian non-free repositories useful to load
 #closed source firmware (i.e. WiFi dongle firmware)
