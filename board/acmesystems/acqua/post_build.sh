@@ -46,3 +46,12 @@ echo dest ram /tmp >> $filename
 echo lists_dir ext /var/opkg-lists >> $filename
 echo option overlay_root /overlay >> $filename
 
+#Setup wireless LAN
+filename=$TARGET_ROOTFS_DIR/etc/network/interfaces
+echo >> $filename
+echo auto wlan0 >> $filename
+echo iface wlan0 inet dhcp >> $filename
+echo     wireless-essid wrt2 >> $filename
+echo     pre-up wpa_supplicant -B w -D wext -i wlan0 -c /etc/wpa_supplicant.conf -dd >> $filename
+echo     post-down killall -q wpa_supplicant >> $filename
+
