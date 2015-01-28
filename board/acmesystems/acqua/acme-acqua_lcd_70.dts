@@ -125,7 +125,7 @@
 			};
 
 			i2c1: i2c@f0018000 {
-				status = "disabled";
+				status = "okay";
 			};
 
 			i2c2: i2c@f801c000 {
