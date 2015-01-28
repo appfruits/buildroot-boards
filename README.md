@@ -15,8 +15,8 @@ In a linux terminal shell navigate to a folder where you want buildroot installe
 > cd Buildroot
 
 Now clone the standard buildroot repository
-> git clone git://github.com/linux4sam/buildroot-at91.git
-This will create a folder "buildroot-at91" in your newly created Buildroot main folder
+> git clone git://git.buildroot.net/buildroot
+This will create a folder "buildroot" in your newly created Buildroot main folder
 
 Now clone this repository
 > git clone git://github.com/appfruits/buildroot-boards
@@ -25,11 +25,11 @@ This will create a folder named "buildroot-boards" as a sibling to the buildroot
 Your Buildroot folder should now look like this:
 
 * Buildroot
-  * buildroot-at91
+  * buildroot
   * buildroot-boards
 
-Navigate to the buildroot-at91 folder
-> cd buildroot-at91
+Navigate to the buildroot folder
+> cd buildroot
 
 Choose which board to configure, in this example we generate an image for Acqua A5 from acmesystems.it (acqua) and prepare the basic buildroot configuration for this board
 > make BR2_EXTERNAL=../buildroot-boards acqua_defconfig
