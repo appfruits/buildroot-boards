@@ -11,13 +11,6 @@ filename=$TARGET_ROOTFS_DIR/etc/resolv.conf
 echo nameserver 8.8.8.8 > $filename
 echo nameserver 8.8.4.4 >> $filename
 
-#Default network interfaces
-filename=$TARGET_ROOTFS_DIR/etc/network/interfaces
-echo allow-hotplug eth0 >> $filename
-echo iface eth0 inet dhcp >> $filename
-#eth0 MAC address
-echo hwaddress ether 00:04:25:12:34:56 >> $filename
-
 #Set the the debug port
 #filename=$TARGET_ROOTFS_DIR/etc/inittab
 #echo T0:2345:respawn:/sbin/getty -L ttyS0 115200 vt100 >> $filename
@@ -47,11 +40,18 @@ echo lists_dir ext /var/opkg-lists >> $filename
 echo option overlay_root /overlay >> $filename
 
 #Setup wireless LAN
-filename=$TARGET_ROOTFS_DIR/etc/network/interfaces
-echo >> $filename
-echo auto wlan0 >> $filename
-echo iface wlan0 inet dhcp >> $filename
-echo     wireless-essid wrt2 >> $filename
-echo     pre-up wpa_supplicant -B w -D wext -i wlan0 -c /etc/wpa_supplicant.conf -dd >> $filename
-echo     post-down killall -q wpa_supplicant >> $filename
+#filename=$TARGET_ROOTFS_DIR/etc/network/interfaces
+#echo # Configure Loopback > $filename
+#echo auto lo >> $filename
+#echo iface lo inet loopback >> $filename
+#echo # Configure Ethernet >> $filename
+#echo allow-hotplug eth0 >> $filename
+#echo iface eth0 inet dhcp >> $filename
+#echo hwaddress ether 00:04:25:12:34:56 >> $filename
+#echo #WLAN Settings >> $filename
+#echo auto wlan0 >> $filename
+#echo iface wlan0 inet dhcp >> $filename
+#echo     wireless-essid wrt2 >> $filename
+#echo     pre-up wpa_supplicant -B w -D wext -i wlan0 -c /etc/wpa_supplicant.conf -dd >> $filename
+#echo     post-down killall -q wpa_supplicant >> $filename
 
