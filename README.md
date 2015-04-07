@@ -7,6 +7,9 @@ Currently these boards are supported:
 
 * acqua (Acqua A5 from acmesystems.it)
 
+## Important Info
+Building the AT91 Bootstrap (boot.bin) file is currently broken. See Issue #2 for details. Until we have fixed that please follow Acmesystems tutorial "Compiling AT91Bootstrap 3.7" that you can find here: http://www.acmesystems.it/compile_at91bootstrap. Follow the instructions below, but instead of the Buildroot boot.bin copy the boot.bin from the tutorial on your SD and everything should be working fine.
+
 ## Install
 
 In a linux terminal shell navigate to a folder where you want buildroot installed, i.e.
