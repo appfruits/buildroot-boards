@@ -10,7 +10,7 @@ Currently these boards are supported:
 ## Important Info
 Building the AT91 Bootstrap (boot.bin) file is currently broken. See Issue #2 for details. Until we have fixed that please follow Acmesystems tutorial "Compiling AT91Bootstrap 3.7" that you can find here: http://www.acmesystems.it/compile_at91bootstrap. Follow the instructions below, but instead of the Buildroot boot.bin copy the boot.bin from the tutorial on your SD and everything should be working fine.
 
-If you are new to Qt5 you will run into a few issues. Issue #1 and #2 will have a lot of solutions that should get you up and running. I will soon write a blog post with a complete tutorial but until then follow the instructions below and then read issue #1 and issue #2 that should get you up and running in a minute.
+If you are new to Qt5 you will run into a few issues. Issue #1 (https://github.com/appfruits/buildroot-boards/issues/1) and #2 (https://github.com/appfruits/buildroot-boards/issues/2) will have a lot of solutions that should get you up and running. I will soon write a blog post with a complete tutorial but until then follow the instructions below and then read issue #1 and issue #2 that should get you up and running in a minute.
 
 ## Install
 
